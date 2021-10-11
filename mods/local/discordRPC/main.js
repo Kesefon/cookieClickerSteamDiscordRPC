@@ -1,7 +1,7 @@
 async function setActivity() {
   window.api.send('discord', {
     details: parseFloat(Game.cookies).toString()+' Cookies',
-    state: parseFloat(Game.cookiesEarned).toString() + 'Cookies earned',
+    state: parseFloat(Game.cookiesEarned).toString() + ' Cookies earned',
     largeImageKey: 'icon',
     largeImageText: 'Using Kesefon\'s rich presence',
   });
