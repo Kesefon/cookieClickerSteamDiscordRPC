@@ -1,7 +1,11 @@
+var lastCookiesPerSecond = 0;
+var date = Date.now();
+
 async function setActivity() {
   window.api.send('discord', {
-    details: parseFloat(Game.cookies).toString()+' Cookies',
-    state: parseFloat(Game.cookiesEarned).toString() + ' Cookies earned',
+    details: Beautify(lastCookiesPerSecond)+' Cookies per Second',
+    state: Beautify(Game.cookiesEarned) + ' Cookies earned',
+    startTimestamp: date,
     largeImageKey: 'icon',
     largeImageText: 'Using Kesefon\'s rich presence',
   });
@@ -9,6 +13,10 @@ async function setActivity() {
 
 Game.registerMod("discordRPC",{
 	init:function(){
+        Game.registerHook('cps', (value) => {
+            lastCookiesPerSecond = value;
+            return value;
+        })
         setActivity();
 
         // activity can only be set every 15 seconds
