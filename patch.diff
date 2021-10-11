@@ -1,22 +1,43 @@
-diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/package.json" "Cookie Clicker DiscordRPC/resources/app/package.json"
-8a9
->     "discord-rpc": "^4.0.1",
-11c12
-< }
+diff --git a/package.json b/package.json
+index 8771438..86f2148 100755
+--- a/package.json
++++ b/package.json
+@@ -6,6 +6,7 @@
+   "author": "Orteil",
+   "license": "ISC",
+   "dependencies": {
++    "discord-rpc": "^4.0.1",
+     "steamapi": "^2.1.1"
+   }
+ }
 \ No newline at end of file
----
-> }
-diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/preload.js" "Cookie Clicker DiscordRPC/resources/app/preload.js"
-6c6
-< 			if (channel=='toMain') ipcRenderer.send(channel,data);
----
-> 			if (channel=='toMain'||channel=='discord') ipcRenderer.send(channel,data);
-diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/start.js" "Cookie Clicker DiscordRPC/resources/app/start.js"
-328a329,335
->     
->     
->     //DiscordRPC
->     const {setActivity}=require('./discordRPC');
->     ipcMain.on('discord', (e,args)=>{
->         setActivity(e,args);
->     });
+diff --git a/preload.js b/preload.js
+index 5328be8..c715cd8 100755
+--- a/preload.js
++++ b/preload.js
+@@ -3,7 +3,7 @@ const {contextBridge,ipcRenderer}=require('electron');
+ contextBridge.exposeInMainWorld(
+ 	'api',{
+ 		send:(channel,data)=>{
+-			if (channel=='toMain') ipcRenderer.send(channel,data);
++			if (channel=='toMain'||channel=='discord') ipcRenderer.send(channel,data);
+ 		},
+ 		receive:(channel,func)=>{
+ 			if (channel=='fromMain') ipcRenderer.on(channel,(e,...args)=>func(...args));
+diff --git a/start.js b/start.js
+index f900c9c..29a275c 100755
+--- a/start.js
++++ b/start.js
+@@ -326,6 +326,12 @@ function createWindow(){
+ 		win.loadFile(path.join(__dirname,'/src/index.html'),BETA?{query:{'beta':'1'}}:{});
+ 		if (DEV) win.webContents.openDevTools();
+ 	},1000*splashDur);
++
++	//DiscordRPC
++		const {setActivity}=require('./discordRPC');
++		ipcMain.on('discord', (e,args)=>{
++			setActivity(e,args);
++		});
+ }
+ 
+ app.whenReady().then(createWindow);

@@ -1,3 +1,3 @@
 #! /bin/sh
-patch --binary -i patch.diff
+patch --binary -p1 -i patch.diff
 npm install
