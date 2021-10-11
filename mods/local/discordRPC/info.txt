@@ -1,0 +1,12 @@
+{
+	"Name": "discordRPC",
+	"ID": "discordRPC",
+	"Author": "Kesefon",
+	"Description": "Discord Rich Presence",
+	"ModVersion": 1,
+	"GameVersion": 2.042,
+	"Date": "10/10/2021",
+	"Dependencies": [],
+	"AllowSteamAchievs":1,
+	"Disabled": 0
+}

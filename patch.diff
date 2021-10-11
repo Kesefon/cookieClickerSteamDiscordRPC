@@ -1,0 +1,22 @@
+diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/package.json" "Cookie Clicker DiscordRPC/resources/app/package.json"
+8a9
+>     "discord-rpc": "^4.0.1",
+11c12
+< }
+\ No newline at end of file
+---
+> }
+diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/preload.js" "Cookie Clicker DiscordRPC/resources/app/preload.js"
+6c6
+< 			if (channel=='toMain') ipcRenderer.send(channel,data);
+---
+> 			if (channel=='toMain'||channel=='discord') ipcRenderer.send(channel,data);
+diff '--color=auto' -r -N --binary '--exclude-from=rdsfd' "Cookie Clicker/resources/app/start.js" "Cookie Clicker DiscordRPC/resources/app/start.js"
+328a329,335
+>     
+>     
+>     //DiscordRPC
+>     const {setActivity}=require('./discordRPC');
+>     ipcMain.on('discord', (e,args)=>{
+>         setActivity(e,args);
+>     });
