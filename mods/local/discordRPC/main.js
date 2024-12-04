@@ -9,7 +9,7 @@ async function setActivity() {
 		smallImage = undefined;
 	}
   window.api.send('discord', {
-    details: Beautify(lastCookiesPerSecond)+' Cookies per Second',
+    details: Beautify(Game.cookiesPs)+' Cookies per Second',
     state: Beautify(Game.cookiesEarned) + ' Cookies earned',
     startTimestamp: date,
 	smallImageKey: smallImage,
@@ -20,13 +20,6 @@ async function setActivity() {
 
 Game.registerMod("discordRPC",{
 	init:function(){
-        Game.registerHook('cps', (value) => {
-            lastCookiesPerSecond = value;
-            return value;
-        })
-        setActivity();
-
-        // activity can only be set every 15 seconds
         setInterval(() => {
             setActivity();
         }, 15e3);
